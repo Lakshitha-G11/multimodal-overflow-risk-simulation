@@ -1,0 +1,77 @@
+seed 1000 done
+seed 1001 done
+seed 1002 done
+seed 1003 done
+seed 1004 done
+seed 1005 done
+seed 1006 done
+seed 1007 done
+seed 1008 done
+seed 1009 done
+
+Test set per seed: 100 overflow / 100 non-overflow cycles; 10 seeds
+
+=== MAIN (mean ± 95% CI over seeds; %, s) ===
+                          method detection_rate false_alarm_rate  precision mean_lead_s median_lead_s  threshold
+            Adaptive (heuristic)     99.9 ± 0.2        5.2 ± 2.0 95.1 ± 1.7  17.8 ± 1.2    17.1 ± 1.3 58.2 ± 1.3
+           Fixed (equal weights)     97.9 ± 1.9        5.5 ± 2.4 94.8 ± 2.1  16.3 ± 1.4    15.8 ± 1.6 72.9 ± 1.0
+Gradient boosting (+10 s trends)    79.0 ± 10.9        5.3 ± 2.2 93.8 ± 2.1  27.2 ± 2.7    24.9 ± 3.6 83.3 ± 2.5
+      Logistic (learned weights)     91.1 ± 4.5        4.6 ± 2.3 95.4 ± 2.2  16.1 ± 1.1    14.7 ± 0.7 85.0 ± 1.9
+            ToF + rate of change     24.8 ± 4.5        7.7 ± 3.0 77.5 ± 6.4  18.9 ± 3.2    13.6 ± 1.7 62.8 ± 1.6
+                        ToF only     66.1 ± 4.5        6.7 ± 3.5 91.3 ± 4.0  15.9 ± 1.3    14.0 ± 1.5 46.0 ± 1.5
+
+=== ABLATION ===
+                  method detection_rate false_alarm_rate mean_lead_s
+      Fixed w/o acoustic     48.2 ± 5.0        5.3 ± 3.1  11.4 ± 0.9
+        Fixed w/o height     95.6 ± 3.7        4.9 ± 2.3  14.5 ± 1.1
+      Fixed w/o humidity     98.7 ± 1.1        6.2 ± 2.9  16.7 ± 1.5
+   Fixed w/o temperature     99.3 ± 0.3        5.6 ± 2.8  17.6 ± 1.3
+   Logistic w/o acoustic     62.7 ± 5.2        5.8 ± 2.2  15.8 ± 1.3
+     Logistic w/o height     98.4 ± 1.4        4.1 ± 2.3  16.6 ± 0.9
+   Logistic w/o humidity     88.3 ± 5.7        4.1 ± 2.0  14.4 ± 0.9
+Logistic w/o temperature     89.1 ± 7.2        4.6 ± 2.3  15.2 ± 1.3
+
+=== ROBUSTNESS (thresholds fixed from nominal validation) ===
+               condition                           method detection_rate false_alarm_rate mean_lead_s
+dropout in 80% of cycles             Adaptive (heuristic)     99.5 ± 0.6        5.7 ± 1.9  17.7 ± 1.0
+dropout in 80% of cycles            Fixed (equal weights)     98.1 ± 1.2        4.4 ± 1.7  15.9 ± 1.5
+dropout in 80% of cycles Gradient boosting (+10 s trends)    75.9 ± 11.6        4.6 ± 2.0  27.3 ± 1.9
+dropout in 80% of cycles       Logistic (learned weights)     92.5 ± 2.6        5.8 ± 2.3  16.3 ± 1.5
+dropout in 80% of cycles             ToF + rate of change     26.4 ± 6.2        7.2 ± 1.9  21.7 ± 4.1
+dropout in 80% of cycles                         ToF only     63.5 ± 4.7        5.6 ± 2.1  16.1 ± 1.0
+                noise x2             Adaptive (heuristic)     99.5 ± 0.7        6.1 ± 2.1  17.3 ± 1.0
+                noise x2            Fixed (equal weights)     97.5 ± 1.7        5.3 ± 2.3  15.1 ± 1.3
+                noise x2 Gradient boosting (+10 s trends)    54.9 ± 14.8        2.4 ± 1.8  27.4 ± 2.0
+                noise x2       Logistic (learned weights)     85.8 ± 4.6        5.3 ± 2.1  17.2 ± 1.6
+                noise x2             ToF + rate of change     30.9 ± 6.5        6.9 ± 2.7  20.8 ± 3.8
+                noise x2                         ToF only     64.5 ± 3.3        6.9 ± 3.0  15.5 ± 0.8
+                noise x3             Adaptive (heuristic)     99.2 ± 0.8        7.6 ± 2.3  17.8 ± 1.1
+                noise x3            Fixed (equal weights)     95.8 ± 2.3        6.0 ± 2.2  14.7 ± 1.3
+                noise x3 Gradient boosting (+10 s trends)    35.9 ± 14.0        2.2 ± 1.7  26.1 ± 1.9
+                noise x3       Logistic (learned weights)     80.3 ± 5.6        7.9 ± 2.4  18.9 ± 1.9
+                noise x3             ToF + rate of change     39.9 ± 6.8        7.4 ± 2.7  21.7 ± 3.7
+                noise x3                         ToF only     63.6 ± 3.1        7.9 ± 3.2  15.5 ± 0.7
+
+=== PAIRED WILCOXON ACROSS SEEDS ===
+                        method_a              method_b           metric  mean_diff_a_minus_b  wilcoxon_p  n_seeds
+           Fixed (equal weights)  Adaptive (heuristic)      mean_lead_s            -1.563326    0.001953       10
+           Fixed (equal weights)  Adaptive (heuristic)   detection_rate            -0.020000    0.015625       10
+           Fixed (equal weights)  Adaptive (heuristic) false_alarm_rate             0.003000    0.910156       10
+      Logistic (learned weights) Fixed (equal weights)      mean_lead_s            -0.144302    1.000000       10
+      Logistic (learned weights) Fixed (equal weights)   detection_rate            -0.068000    0.011719       10
+      Logistic (learned weights) Fixed (equal weights) false_alarm_rate            -0.009000    0.671875       10
+      Logistic (learned weights)              ToF only      mean_lead_s             0.240610    0.769531       10
+      Logistic (learned weights)              ToF only   detection_rate             0.250000    0.001953       10
+      Logistic (learned weights)              ToF only false_alarm_rate            -0.021000    0.378906       10
+Gradient boosting (+10 s trends) Fixed (equal weights)      mean_lead_s            10.926183    0.001953       10
+Gradient boosting (+10 s trends) Fixed (equal weights)   detection_rate            -0.189000    0.005859       10
+Gradient boosting (+10 s trends) Fixed (equal weights) false_alarm_rate            -0.002000    0.890625       10
+Gradient boosting (+10 s trends)  Adaptive (heuristic)      mean_lead_s             9.362856    0.001953       10
+Gradient boosting (+10 s trends)  Adaptive (heuristic)   detection_rate            -0.209000    0.001953       10
+Gradient boosting (+10 s trends)  Adaptive (heuristic) false_alarm_rate             0.001000    0.976562       10
+
+Logistic coefficients (mean over seeds):
+acoustic        5.64
+height         -1.54
+temperature    -5.03
+humidity       14.41

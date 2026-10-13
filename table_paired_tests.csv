@@ -1,0 +1,16 @@
+method_a,method_b,metric,mean_diff_a_minus_b,wilcoxon_p,n_seeds
+Fixed (equal weights),Adaptive (heuristic),mean_lead_s,-1.56332631116963,0.001953125,10
+Fixed (equal weights),Adaptive (heuristic),detection_rate,-0.019999999999999997,0.015625,10
+Fixed (equal weights),Adaptive (heuristic),false_alarm_rate,0.0029999999999999983,0.91015625,10
+Logistic (learned weights),Fixed (equal weights),mean_lead_s,-0.14430190599225998,1.0,10
+Logistic (learned weights),Fixed (equal weights),detection_rate,-0.06800000000000002,0.01171875,10
+Logistic (learned weights),Fixed (equal weights),false_alarm_rate,-0.009,0.671875,10
+Logistic (learned weights),ToF only,mean_lead_s,0.24060984289009824,0.76953125,10
+Logistic (learned weights),ToF only,detection_rate,0.25000000000000006,0.001953125,10
+Logistic (learned weights),ToF only,false_alarm_rate,-0.021,0.37890625,10
+Gradient boosting (+10 s trends),Fixed (equal weights),mean_lead_s,10.926182569451651,0.001953125,10
+Gradient boosting (+10 s trends),Fixed (equal weights),detection_rate,-0.189,0.005859375,10
+Gradient boosting (+10 s trends),Fixed (equal weights),false_alarm_rate,-0.001999999999999999,0.890625,10
+Gradient boosting (+10 s trends),Adaptive (heuristic),mean_lead_s,9.362856258282019,0.001953125,10
+Gradient boosting (+10 s trends),Adaptive (heuristic),detection_rate,-0.209,0.001953125,10
+Gradient boosting (+10 s trends),Adaptive (heuristic),false_alarm_rate,0.0009999999999999963,0.9765625,10
